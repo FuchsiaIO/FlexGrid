@@ -1,0 +1,46 @@
+%column
+  box-sizing: border-box
+  -webkit-flex: 0 0 auto
+  -ms-flex: 0 0 auto
+  -webkit-box-flex: 0
+  flex: 0 0 auto
+  padding-right: .5rem
+  padding-left: .5rem
+
+@mixin col-orders($prefix:"")
+  @if $prefix != ""
+    $el: #{$prefix}-ord
+  @else
+    $el: ord
+  @for $i from 1 through 12 
+    .#{$el}-#{$i}
+      order: $i
+      -webkit-order: $i
+      -ms-flex-order: $i
+      -webkit-box-ordinal-group: $i
+
+@mixin col-size-mixin($width)
+  -ms-flex-preferred-size: #{$width}%
+  -webkit-flex-basis: #{$width}%
+  flex-basis: #{$width}%
+  max-width: #{$width}%
+
+@mixin col-gen($prefix, $media-sizes, $media-prefix)  
+  @for $i from 1 through length($media-sizes)
+    $width: nth($media-sizes, $i)
+    .col.#{$prefix}-#{nth($media-prefix, $i)}
+      @include col-size-mixin($width)
+          
+@mixin respond-to($orientation, $size, $prefix, $media-sizes, $media-prefix)
+  @if $orientation == all
+    @media only screen and (max-device-width: $size)
+      @include col-gen($prefix, $media-sizes, $media-prefix)
+      @include col-orders($prefix)
+  @if $orientation == portrait
+    @media only screen and (max-device-width: $size) and (orientation: portrait)
+      @include col-gen($prefix, $media-sizes, $media-prefix)
+      @include col-orders($prefix)
+  @if $orientation == landscape
+    @media only screen and (max-device-width: $size) and (orientation: landscape)
+      @include col-gen($prefix, $media-sizes, $media-prefix)
+      @include col-orders($prefix)

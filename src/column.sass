@@ -1,0 +1,10 @@
+@import 'positioning'
+
+@for $i from 1 through length($sizes) 
+  $width: nth($sizes, $i)
+  .col.#{nth($size-prefix, $i)}
+    @extend %column
+    @include col-size-mixin($width)
+    
+  .col.offset-#{nth($size-prefix, $i)}
+    margin-left: #{$width}%
