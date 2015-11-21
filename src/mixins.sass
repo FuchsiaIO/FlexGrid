@@ -33,7 +33,7 @@
           
 @mixin respond-to($orientation, $size, $prefix, $media-sizes, $media-prefix)
   @if $orientation == all
-    @media only screen and (max-device-width: $size)
+    @media all and (max-width: $size)
       @include col-gen($prefix, $media-sizes, $media-prefix)
       @include col-orders($prefix)
   @if $orientation == portrait
